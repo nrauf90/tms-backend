@@ -23,7 +23,7 @@ jobs:
       - name: SSH into cPanel and Pull Latest Code
         run: |
           ssh ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }} << 'EOF'
-          cd /home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          cd /home2/${{ secrets.CPANEL_USER }}/public_html/elec-main
           git reset --hard  # Ensure a clean state
           git pull origin main  # Pull latest changes
           php artisan config:cache
