@@ -1,0 +1,36 @@
+name: Deploy Laravel to cPanel
+
+on:
+  push:
+    branches:
+      - main  # Change to your branch if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.CPANEL_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy Laravel Project to cPanel
+        run: |
+          rsync -avz --delete ./ ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }}:/home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+
+      - name: Run Laravel Setup Commands on cPanel
+        run: |
+          ssh ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }} << 'EOF'
+          cd /home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan storage:link
+          php artisan swagger-lume:generate
+          EOF
