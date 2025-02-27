@@ -16,6 +16,7 @@ jobs:
       - name: Debug Secrets
         run: |
           echo "CPANEL_HOST=${{ secrets.CPANEL_HOST }}"
+          echo "CPANEL_USER=${{ secrets.CPANEL_USER }}"
           echo "SSH_PRIVATE_KEY Length: ${#SSH_PRIVATE_KEY}"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
