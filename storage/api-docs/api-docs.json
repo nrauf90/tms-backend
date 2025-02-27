@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://fleet.mnr-itsolutions.com",
+            "url": "http://localhost:8000",
             "description": "Laravel API Server"
         }
     ],
@@ -105,14 +105,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createCompany": {
             "post": {
                 "tags": [
                     "Companies"
                 ],
                 "summary": "Create new company",
                 "description": "Creates a new company",
-                "operationId": "cee123b1da67beec88470f8ceb3fcb95",
+                "operationId": "b85f91b2db34e920d0cecc16a2b31d4a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -185,94 +187,14 @@
                 ]
             }
         },
-        "/api/companies/{id}": {
-            "get": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Get company details",
-                "description": "Returns details of a specific company",
-                "operationId": "fd3858af6b6071f4a94538a412bab106",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of company to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                },
-                                                "email": {
-                                                    "type": "string"
-                                                },
-                                                "phone": {
-                                                    "type": "string"
-                                                },
-                                                "address": {
-                                                    "type": "string"
-                                                },
-                                                "status": {
-                                                    "type": "boolean"
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "format": "date-time"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "format": "date-time"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Company details retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Company not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            },
-            "put": {
+        "/api/updateCompany/{id}": {
+            "post": {
                 "tags": [
                     "Companies"
                 ],
                 "summary": "Update company",
                 "description": "Updates an existing company",
-                "operationId": "c125e6ebfb9c7669666225b619092333",
+                "operationId": "49ac960df35d39409e4f774f914be7d3",
                 "parameters": [
                     {
                         "name": "id",
@@ -345,14 +267,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteCompany/{id}": {
             "delete": {
                 "tags": [
                     "Companies"
                 ],
                 "summary": "Delete company",
                 "description": "Deletes an existing company",
-                "operationId": "124aa61ff352c83ede5872644b0ac00d",
+                "operationId": "4984a17708bc59b1cdbfcef0fd9f482a",
                 "parameters": [
                     {
                         "name": "id",
@@ -399,103 +323,25 @@
                 ]
             }
         },
-        "/api/companies/{id}/update": {
-            "put": {
+        "/api/showCompany/{id}": {
+            "get": {
                 "tags": [
                     "Companies"
                 ],
-                "summary": "Update company profile",
-                "description": "Updates company profile information",
-                "operationId": "349c9ddf293b13f10b5d9d8b7c85f76e",
+                "summary": "Get company details",
+                "description": "Returns details of a specific company",
+                "operationId": "ae8e9a356510e4da1d58243dd867fdf0",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of company to update profile",
+                        "description": "ID of company to return",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "phone": {
-                                        "type": "string"
-                                    },
-                                    "address": {
-                                        "type": "string"
-                                    },
-                                    "logo": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "website": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Company profile updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Company profile updated successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Company not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/company": {
-            "get": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Get current company",
-                "description": "Returns details of the currently authenticated company",
-                "operationId": "74dec51b2a26ef63a7e9cfa32fcda82d",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -524,13 +370,151 @@
                                                 "address": {
                                                     "type": "string"
                                                 },
-                                                "logo": {
+                                                "status": {
+                                                    "type": "boolean"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company details retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Company not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/updateCompanyAdmin/{id}": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Update company admin",
+                "description": "Updates company admin information",
+                "operationId": "a663f5e40892536d6c98a67bc49457a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of company to update admin for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "admin_id": {
+                                        "type": "integer"
+                                    },
+                                    "admin_name": {
+                                        "type": "string"
+                                    },
+                                    "admin_email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company admin updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company admin updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Company not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/showCompany": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Get current company details",
+                "description": "Returns details of the currently authenticated company",
+                "operationId": "f46631181f9b3900d4c053639e7c4d85",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
                                                     "type": "string"
                                                 },
-                                                "website": {
+                                                "email": {
                                                     "type": "string"
                                                 },
-                                                "description": {
+                                                "phone": {
+                                                    "type": "string"
+                                                },
+                                                "address": {
                                                     "type": "string"
                                                 },
                                                 "status": {
@@ -667,14 +651,14 @@
                 ]
             }
         },
-        "/api/company-users": {
+        "/api/createCompanyUser": {
             "post": {
                 "tags": [
                     "Company Users"
                 ],
                 "summary": "Add user to company",
                 "description": "Associates a user with the company",
-                "operationId": "25e4449f76282df7cd9b7442b5da4c69",
+                "operationId": "0d382346f206a3c6c4684437937cd4ac",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -738,14 +722,14 @@
                 ]
             }
         },
-        "/api/company-users/{id}": {
-            "put": {
+        "/api/updateCompanyUser/{id}": {
+            "post": {
                 "tags": [
                     "Company Users"
                 ],
                 "summary": "Update company user",
                 "description": "Updates the role or status of a company user",
-                "operationId": "797154f2e20b58d78786269095900a0e",
+                "operationId": "d4b39486d60bd8baa81bfcea4e4af2d1",
                 "parameters": [
                     {
                         "name": "id",
@@ -810,14 +794,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteCompanyUser/{id}": {
             "delete": {
                 "tags": [
                     "Company Users"
                 ],
                 "summary": "Remove user from company",
                 "description": "Removes a user's association with the company",
-                "operationId": "85287603cd8b641ff203013c5009faab",
+                "operationId": "30f2707da242e1e4038648d0df3dc18a",
                 "parameters": [
                     {
                         "name": "id",
@@ -1100,7 +1086,9 @@
                         "bearerAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createCurrency": {
             "post": {
                 "tags": [
                     "Currencies"
@@ -1210,8 +1198,8 @@
                 ]
             }
         },
-        "/api/currencies/{id}": {
-            "put": {
+        "/api/updateCurrency/{id}": {
+            "post": {
                 "tags": [
                     "Currencies"
                 ],
@@ -1306,7 +1294,9 @@
                         "bearerAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteCurrency/{id}": {
             "delete": {
                 "tags": [
                     "Currencies"
@@ -1380,7 +1370,7 @@
                 ]
             }
         },
-        "/api/all-currencies": {
+        "/api/allCurrencies": {
             "get": {
                 "tags": [
                     "Currencies"
@@ -1527,14 +1517,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createLanguages": {
             "post": {
                 "tags": [
                     "Languages"
                 ],
                 "summary": "Create new language",
                 "description": "Creates a new language entry",
-                "operationId": "f7b540d1a2e4ba9719a40dc1d8624fa0",
+                "operationId": "5077158691ffca8bbe1fcee7b46d7202",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1613,14 +1605,14 @@
                 ]
             }
         },
-        "/api/languages/{id}": {
-            "put": {
+        "/api/updateLanguages/{id}": {
+            "post": {
                 "tags": [
                     "Languages"
                 ],
                 "summary": "Update language",
                 "description": "Updates an existing language entry",
-                "operationId": "5515c8a7bada4d2c6667818b6f3543b1",
+                "operationId": "852c5258cf811ec909a7b47d0afbc327",
                 "parameters": [
                     {
                         "name": "id",
@@ -1685,14 +1677,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteLanguages/{id}": {
             "delete": {
                 "tags": [
                     "Languages"
                 ],
                 "summary": "Delete language",
                 "description": "Deletes an existing language entry",
-                "operationId": "e796270a2fb7ddcc3dfa143c8dc3bf78",
+                "operationId": "630af994cbdb70efeeee2013c952171b",
                 "parameters": [
                     {
                         "name": "id",
@@ -1824,6 +1818,223 @@
                 ]
             }
         },
+        "/api/createModule": {
+            "post": {
+                "tags": [
+                    "Modules"
+                ],
+                "summary": "Create new module",
+                "description": "Creates a new module with specified features",
+                "operationId": "5db0d54d46d4cc7ffd46af0fa319e5fe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "User Management"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Module for managing users"
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Module created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Module created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/updateModule/{id}": {
+            "post": {
+                "tags": [
+                    "Modules"
+                ],
+                "summary": "Update module",
+                "description": "Updates an existing module",
+                "operationId": "686cd4e858b0942c11f5aa611cc288cf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of module to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "boolean"
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Module updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Module updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/deleteModule/{id}": {
+            "delete": {
+                "tags": [
+                    "Modules"
+                ],
+                "summary": "Delete module",
+                "description": "Deletes an existing module",
+                "operationId": "0238d12d593e714843630ddf3b3da52f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of module to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Module deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Module deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Module not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/api/notifications": {
             "get": {
                 "tags": [
@@ -1888,14 +2099,74 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/unreadNotifications": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Get unread notifications",
+                "description": "Returns list of unread notifications for the authenticated user",
+                "operationId": "f89d5fc5876af6f33385974c983b403a",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "message": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unread notifications retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/newNotification": {
             "post": {
                 "tags": [
                     "Notifications"
                 ],
                 "summary": "Create new notification",
                 "description": "Creates a new notification",
-                "operationId": "ce0b3bfe096237d37c937fc1551ff4da",
+                "operationId": "ba31710c90bb6f5314f8c12d649e8d15",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1959,72 +2230,14 @@
                 ]
             }
         },
-        "/api/notifications/unread": {
-            "get": {
-                "tags": [
-                    "Notifications"
-                ],
-                "summary": "Get unread notifications",
-                "description": "Returns list of unread notifications for the authenticated user",
-                "operationId": "6f8e2d856d727ff18763c097672e1af8",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer"
-                                                    },
-                                                    "type": {
-                                                        "type": "string"
-                                                    },
-                                                    "message": {
-                                                        "type": "string"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unread notifications retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/notifications/{id}": {
+        "/api/showNotification/{id}": {
             "get": {
                 "tags": [
                     "Notifications"
                 ],
                 "summary": "Get notification by ID",
                 "description": "Returns a specific notification",
-                "operationId": "5eb5300fde861ae64cc0c8045ba65583",
+                "operationId": "a80ee4140131e852745e5830bbe27399",
                 "parameters": [
                     {
                         "name": "id",
@@ -2089,68 +2302,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
-            "delete": {
-                "tags": [
-                    "Notifications"
-                ],
-                "summary": "Delete notification",
-                "description": "Deletes a specific notification",
-                "operationId": "7c72326e2cb2bfa472ce2b7f386a5acf",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Notification ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Notification deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Notification deleted successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Notification not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
             }
         },
-        "/api/notifications/read-all/{id}": {
-            "post": {
+        "/api/readAllNotifications/{id}": {
+            "get": {
                 "tags": [
                     "Notifications"
                 ],
                 "summary": "Mark all notifications as read",
                 "description": "Marks all notifications as read for a specific user",
-                "operationId": "9f684f18248868fcbcd72671e9a9af0b",
+                "operationId": "25b9d2afe6eced6130f3f2f8c94ebc6c",
                 "parameters": [
                     {
                         "name": "id",
@@ -2197,14 +2358,14 @@
                 ]
             }
         },
-        "/api/notifications/read/{id}": {
-            "post": {
+        "/api/readNotification/{id}": {
+            "get": {
                 "tags": [
                     "Notifications"
                 ],
                 "summary": "Mark notification as read",
                 "description": "Marks a specific notification as read",
-                "operationId": "049fbfd2bc10723aabd455a7b021219b",
+                "operationId": "46bf082f5822ace24200b2f0466fa407",
                 "parameters": [
                     {
                         "name": "id",
@@ -2251,14 +2412,68 @@
                 ]
             }
         },
-        "/api/offline-payments": {
+        "/api/deleteNotification/{id}": {
+            "delete": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Delete notification",
+                "description": "Deletes a specific notification",
+                "operationId": "8554eb0c0be60627956d615158a1bcdb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Notification ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notification deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Notification deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Notification not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/offlineMethods": {
             "get": {
                 "tags": [
                     "Offline Payments"
                 ],
                 "summary": "Get all offline payment methods",
                 "description": "Returns list of all configured offline payment methods",
-                "operationId": "9f59198c6f6e17d80fad7af696c46b8c",
+                "operationId": "4aabf0491bcb93fbf25d5396b91575ac",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -2320,14 +2535,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createOfflineMethod": {
             "post": {
                 "tags": [
                     "Offline Payments"
                 ],
                 "summary": "Create new offline payment method",
                 "description": "Creates a new offline payment method",
-                "operationId": "5d1a75759932f7913c85bf098eadc024",
+                "operationId": "404b8653ca5706b88b310fefade17723",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2421,14 +2638,14 @@
                 ]
             }
         },
-        "/api/offline-payments/{id}": {
-            "put": {
+        "/api/updateOfflineMethod/{id}": {
+            "post": {
                 "tags": [
                     "Offline Payments"
                 ],
                 "summary": "Update offline payment method",
                 "description": "Updates an existing offline payment method",
-                "operationId": "97f09c0d34bd074082f629069301061e",
+                "operationId": "e7337403d5926a1eb719354ec5a99881",
                 "parameters": [
                     {
                         "name": "id",
@@ -2522,14 +2739,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteOfflineMethod/{id}": {
             "delete": {
                 "tags": [
                     "Offline Payments"
                 ],
                 "summary": "Delete offline payment method",
                 "description": "Deletes an existing offline payment method",
-                "operationId": "5afd724d2a01322381c739a0be9da037",
+                "operationId": "89afb92d87df689d2e25b45225f6b684",
                 "parameters": [
                     {
                         "name": "id",
@@ -2669,14 +2888,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createPackages": {
             "post": {
                 "tags": [
                     "Packages"
                 ],
                 "summary": "Create new package",
                 "description": "Creates a new package with specified modules and features",
-                "operationId": "05b37489e2a6cde1f8d3f6970185ff54",
+                "operationId": "42a54cef0dda9ae35e41a7e733344d87",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2762,14 +2983,14 @@
                 ]
             }
         },
-        "/api/packages/{id}": {
-            "put": {
+        "/api/updatePackages/{id}": {
+            "post": {
                 "tags": [
                     "Packages"
                 ],
                 "summary": "Update package",
                 "description": "Updates an existing package with new data",
-                "operationId": "f1d050cff3d2ef404dccf96acb17c23c",
+                "operationId": "e7683e90e556d349e432295f55839293",
                 "parameters": [
                     {
                         "name": "id",
@@ -2848,14 +3069,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deletePackages/{id}": {
             "delete": {
                 "tags": [
                     "Packages"
                 ],
                 "summary": "Delete package",
                 "description": "Deletes an existing package",
-                "operationId": "5d78fac156bf755d68fc3cf8e1c7cd28",
+                "operationId": "334e072abd77e2178d831d86ea8d41b9",
                 "parameters": [
                     {
                         "name": "id",
@@ -2902,14 +3125,14 @@
                 ]
             }
         },
-        "/api/packages/{id}/details": {
+        "/api/packageDetails/{id}": {
             "get": {
                 "tags": [
                     "Packages"
                 ],
                 "summary": "Get package details",
                 "description": "Returns detailed information about a specific package including its modules and features",
-                "operationId": "8e634599a63738e6d8ea08cdfcb1aacb",
+                "operationId": "89f6acb508baf153648bbd395fb31646",
                 "parameters": [
                     {
                         "name": "id",
@@ -3086,14 +3309,14 @@
                 ]
             }
         },
-        "/api/paypal": {
+        "/api/storePaypalInfo": {
             "post": {
                 "tags": [
                     "PayPal"
                 ],
                 "summary": "Configure PayPal gateway",
                 "description": "Store PayPal gateway configuration settings",
-                "operationId": "d054661d576cbb1dc36fd0694514ee9a",
+                "operationId": "6eea4573f0424f8e38777cbf87a4431e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3188,14 +3411,14 @@
                 ]
             }
         },
-        "/api/paypal/info": {
+        "/api/paypalInfo": {
             "get": {
                 "tags": [
                     "PayPal"
                 ],
                 "summary": "Get PayPal gateway information",
                 "description": "Returns the current PayPal gateway configuration settings",
-                "operationId": "e68bd778c9eb21ad8b7e5fa7d45b3d61",
+                "operationId": "8d982d911c139e1ffcecce9cbaf34240",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -3257,14 +3480,14 @@
                 ]
             }
         },
-        "/api/paypal/{id}": {
-            "put": {
+        "/api/updatePaypalInfo/{id}": {
+            "post": {
                 "tags": [
                     "PayPal"
                 ],
                 "summary": "Update PayPal gateway configuration",
                 "description": "Updates the existing PayPal gateway configuration settings",
-                "operationId": "cf275c9229c9ca844532ba576c99133f",
+                "operationId": "b23d9b4af3b03148f01ea92fb7f0659c",
                 "parameters": [
                     {
                         "name": "id",
@@ -3364,14 +3587,14 @@
                 ]
             }
         },
-        "/api/permissions": {
+        "/api/permission": {
             "get": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Get list of permissions",
                 "description": "Returns list of all permissions",
-                "operationId": "3e9ee7de4ce268383cf051894d4c462a",
+                "operationId": "4b8e3995891729ea0e6debd378e5e2f1",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -3410,114 +3633,17 @@
                 ]
             }
         },
-        "/api/permissions/{id}": {
-            "get": {
-                "tags": [
-                    "Permissions"
-                ],
-                "summary": "Get permission by ID",
-                "description": "Returns a specific permission by its ID",
-                "operationId": "8d026603ce13510e4a18682c6b6a482c",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of permission to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                },
-                                                "description": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Permission retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Permission not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Permissions"
-                ],
-                "summary": "Delete permission",
-                "description": "Deletes a permission by ID",
-                "operationId": "d0f2d66bb51841f7cef84cf0f49a1d90",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of permission to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Permission deleted successfully"
-                    },
-                    "404": {
-                        "description": "Permission not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/permissions/{pname}": {
+        "/api/permission/{permission}": {
             "post": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Create new permission",
                 "description": "Creates a new permission with the specified name",
-                "operationId": "3f62e1d39eb661bf939879abcf987bcb",
+                "operationId": "1eba167047ffd163cb3aced800a9e721",
                 "parameters": [
                     {
-                        "name": "pname",
+                        "name": "permission",
                         "in": "path",
                         "description": "Name of the permission to create",
                         "required": true,
@@ -3533,12 +3659,34 @@
                     "400": {
                         "description": "Invalid input"
                     }
-                },
-                "security": [
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Delete permission",
+                "description": "Deletes a permission",
+                "operationId": "f1a45c67d5c4a229e25fc6a701231587",
+                "parameters": [
                     {
-                        "apiAuth": []
+                        "name": "permission",
+                        "in": "path",
+                        "description": "Permission to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permission deleted successfully"
+                    },
+                    "404": {
+                        "description": "Permission not found"
+                    }
+                }
             }
         },
         "/api/permissions/{pname}/users/{permission}": {
@@ -3682,69 +3830,14 @@
                 ]
             }
         },
-        "/api/permissions/groups": {
-            "get": {
-                "tags": [
-                    "Permissions"
-                ],
-                "summary": "Get all permission groups",
-                "description": "Returns list of all permission groups",
-                "operationId": "4ef596324f75094d100cc03cdffd79d7",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer"
-                                                    },
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "description": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Permission groups retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No permission groups found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            },
+        "/api/createPermissionGroup": {
             "post": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Create permission group",
                 "description": "Creates a new permission group",
-                "operationId": "04a3375fce250b78cb6924705ebb8a9b",
+                "operationId": "555e191593c99143154d3069d920790e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3755,12 +3848,10 @@
                                 ],
                                 "properties": {
                                     "name": {
-                                        "type": "string",
-                                        "example": "admin_group"
+                                        "type": "string"
                                     },
                                     "description": {
-                                        "type": "string",
-                                        "example": "Administrative permissions"
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -3775,27 +3866,22 @@
                     "400": {
                         "description": "Invalid input"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/permissions/groups/{id}": {
+        "/api/deletePermissionGroup/{id}": {
             "delete": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Delete permission group",
-                "description": "Deletes a permission group by ID",
-                "operationId": "32c8028c2844533cb45bbe3d55ee9365",
+                "description": "Deletes a permission group",
+                "operationId": "5a7991f359391db80413028d689e3eef",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of permission group to delete",
+                        "description": "ID of the permission group",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -3809,25 +3895,35 @@
                     "404": {
                         "description": "Permission group not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/permissions/roles/{roleId}": {
+        "/api/getAllGroups": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Get all permission groups",
+                "description": "Returns list of all permission groups",
+                "operationId": "337f4479553c75ff3657987058382f49",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/assignPermissiontoRole/{id}": {
             "post": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Assign permissions to role",
-                "description": "Assigns multiple permissions to a specific role",
-                "operationId": "4dabc20e3ddfb6b7b0da601de28c953b",
+                "description": "Assigns multiple permissions to a role",
+                "operationId": "07abf0dc33370fa56cb56d013da01e4b",
                 "parameters": [
                     {
-                        "name": "roleId",
+                        "name": "id",
                         "in": "path",
                         "description": "ID of the role",
                         "required": true,
@@ -3846,12 +3942,7 @@
                                         "type": "array",
                                         "items": {
                                             "type": "string"
-                                        },
-                                        "example": [
-                                            "create_users",
-                                            "edit_users",
-                                            "delete_users"
-                                        ]
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -3866,27 +3957,22 @@
                     "404": {
                         "description": "Role not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/permissions/{permissionId}": {
-            "put": {
+        "/api/edit/permission/{id}": {
+            "post": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Edit permission",
-                "description": "Updates an existing permission",
-                "operationId": "c2487b641fd9e586f66914c68ebe6bea",
+                "description": "Updates a permission's details",
+                "operationId": "84762bca0c00a7447402717de589b2cc",
                 "parameters": [
                     {
-                        "name": "permissionId",
+                        "name": "id",
                         "in": "path",
-                        "description": "ID of permission to update",
+                        "description": "ID of the permission",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -3918,22 +4004,109 @@
                     "404": {
                         "description": "Permission not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/permissions/generic": {
+        "/api/addGenericPermissions": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Create generic permissions",
+                "description": "Creates generic permissions for modules",
+                "operationId": "12200d06111540470c91ab96742624e1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Generic permissions created successfully"
+                    }
+                }
+            }
+        },
+        "/api/getGenericPermissions": {
             "get": {
                 "tags": [
                     "Permissions"
                 ],
                 "summary": "Get generic permissions",
-                "description": "Returns list of all generic permissions",
-                "operationId": "41d4bdd525e41185d5734476bd50f5d0",
+                "description": "Returns list of generic permissions",
+                "operationId": "21dbf1ab20fcc609e8fc5ec4908fcae6",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/getGroupedPermissions": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Get grouped permissions",
+                "description": "Returns permissions grouped by their groups",
+                "operationId": "2c442fc014018946aa89476ff871014d",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/getPermission/{id}": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Get permission by ID",
+                "description": "Returns details of a specific permission",
+                "operationId": "2caae84b6dd30afe16dd39068b2df51a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the permission",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Permission not found"
+                    }
+                }
+            }
+        },
+        "/api/groups": {
+            "get": {
+                "tags": [
+                    "Permission Groups"
+                ],
+                "summary": "Get list of permission groups",
+                "description": "Returns list of all permission groups",
+                "operationId": "55e91561b2bed448f55081870bd668ea",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -3957,6 +4130,14 @@
                                                     },
                                                     "description": {
                                                         "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
                                                     }
                                                 },
                                                 "type": "object"
@@ -3964,13 +4145,16 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Generic permissions retrieved successfully"
+                                            "example": "Permission groups retrieved successfully"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "No groups found"
                     }
                 },
                 "security": [
@@ -3978,33 +4162,33 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createGroup": {
             "post": {
                 "tags": [
-                    "Permissions"
+                    "Permission Groups"
                 ],
-                "summary": "Create generic permissions",
-                "description": "Creates new generic permissions",
-                "operationId": "e40265c5a2b4b31778e8a9925f382926",
+                "summary": "Create new permission group",
+                "description": "Creates a new permission group",
+                "operationId": "34d253a4c489956257f62357b89f9589",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
                                 "properties": {
-                                    "permissions": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "name": {
-                                                    "type": "string"
-                                                },
-                                                "description": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Admin Group"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Group for administrative permissions"
                                     }
                                 },
                                 "type": "object"
@@ -4014,7 +4198,46 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Generic permissions created successfully"
+                        "description": "Permission group created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Permission group created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Invalid input"
@@ -4027,17 +4250,48 @@
                 ]
             }
         },
-        "/api/permissions/grouped": {
-            "get": {
+        "/api/updateGroup/{id}": {
+            "post": {
                 "tags": [
-                    "Permissions"
+                    "Permission Groups"
                 ],
-                "summary": "Get grouped permissions",
-                "description": "Returns list of permissions grouped by their categories",
-                "operationId": "e3dce540e80c720473c2b4f3684ed4cc",
+                "summary": "Update permission group",
+                "description": "Updates an existing permission group",
+                "operationId": "13bb1859fbf1152961edb77e8f6d2098",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of permission group to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Admin Group"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated group description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Permission group updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4051,13 +4305,70 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Grouped permissions retrieved successfully"
+                                            "example": "Permission group updated successfully"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Permission group not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/deleteGroup/{id}": {
+            "delete": {
+                "tags": [
+                    "Permission Groups"
+                ],
+                "summary": "Delete permission group",
+                "description": "Deletes an existing permission group",
+                "operationId": "91415abb140c6790a45360d62a7d9413",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of permission group to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permission group deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Permission group deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Permission group not found"
                     }
                 },
                 "security": [
@@ -4316,14 +4627,73 @@
                 }
             }
         },
-        "/api/roles": {
+        "/api/responseTesting": {
+            "get": {
+                "tags": [
+                    "Testing"
+                ],
+                "summary": "Test API response format",
+                "description": "Returns a sample API response for testing purposes",
+                "operationId": "c8ae2f58f029b08beccae2ed5d58cd82",
+                "responses": {
+                    "200": {
+                        "description": "Sample response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statusCode": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "integer",
+                                                    "example": 200
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Operation Successfully Performed"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Test Response"
+                                        },
+                                        "payload": {
+                                            "type": "object"
+                                        },
+                                        "error": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "isSuccess": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/role": {
             "get": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Get list of roles",
                 "description": "Returns list of all roles with their permissions",
-                "operationId": "4a4456bcd613b11c05e5fe9143124e71",
+                "operationId": "35055686a5bc83fa89e98a6199ccec27",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -4374,27 +4744,60 @@
                         "apiAuth": []
                     }
                 ]
+            }
+        },
+        "/api/role/{role}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get role details",
+                "description": "Returns role data with its permissions",
+                "operationId": "8c9fb82a05116c74989fdfc72146aa06",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "Name of the role",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    }
+                }
             },
             "post": {
                 "tags": [
                     "Roles"
                 ],
-                "summary": "Create new role",
-                "description": "Creates a new role with specified permissions",
-                "operationId": "95bb0efc4bf8d8af1ba59d45d0f79633",
+                "summary": "Add new role",
+                "description": "Creates a new role with specified name",
+                "operationId": "a2ef8509fecbc4cb404e6d8c946905c2",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "Name of the role to create",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name"
-                                ],
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "editor"
-                                    },
                                     "permissions": {
                                         "type": "array",
                                         "items": {
@@ -4418,54 +4821,17 @@
                     "400": {
                         "description": "Invalid input"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/roles/{id}": {
-            "get": {
+        "/api/user/role/{id}/edit": {
+            "post": {
                 "tags": [
                     "Roles"
                 ],
-                "summary": "Get role by ID",
-                "description": "Returns role data with its permissions",
-                "operationId": "fb71b9200d4af084292fe035c404a01a",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of role to return",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "404": {
-                        "description": "Role not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Update role",
+                "summary": "Edit role",
                 "description": "Updates role data and permissions",
-                "operationId": "eb9aaf048a9d01897989962510b2b426",
+                "operationId": "301a668b99027e1b2453c8483b0c3f99",
                 "parameters": [
                     {
                         "name": "id",
@@ -4505,25 +4871,22 @@
                     "404": {
                         "description": "Role not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            },
-            "delete": {
+                }
+            }
+        },
+        "/api/role/{id}/permissions": {
+            "get": {
                 "tags": [
                     "Roles"
                 ],
-                "summary": "Delete role",
-                "description": "Deletes a role and its associated permissions",
-                "operationId": "d2a2925fb71f53aee70c390bdca09792",
+                "summary": "Get role permissions",
+                "description": "Returns permissions assigned to a role",
+                "operationId": "8bc8aa4fcb4e2f1dec452a0ce92f615b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of role to delete",
+                        "description": "ID of the role",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -4532,27 +4895,51 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Role deleted successfully"
+                        "description": "Successful operation"
                     },
                     "404": {
                         "description": "Role not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/roles/{role}/users/{user}": {
+        "/api/user/{user}/role": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get user roles",
+                "description": "Returns roles assigned to a user",
+                "operationId": "ed1415d0ea69f0322d752b005fa3af28",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/role/{role}/user/{user}": {
             "post": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Assign role to user",
                 "description": "Assigns a role to a specific user",
-                "operationId": "80ba3ef78e21136185c91ff6c5ddf7ec",
+                "operationId": "f63ec1c537bb7c7aac4340aa6dcb54fb",
                 "parameters": [
                     {
                         "name": "role",
@@ -4580,12 +4967,7 @@
                     "404": {
                         "description": "Role or user not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -4593,12 +4975,12 @@
                 ],
                 "summary": "Remove role from user",
                 "description": "Removes a role from a specific user",
-                "operationId": "90f398fec8500e62ffc9f5158bb00265",
+                "operationId": "a39b5cbaa86618cd1a6d38c1fb9398a8",
                 "parameters": [
                     {
                         "name": "role",
                         "in": "path",
-                        "description": "Role model",
+                        "description": "ID of the role",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -4607,7 +4989,7 @@
                     {
                         "name": "user",
                         "in": "path",
-                        "description": "User model",
+                        "description": "ID of the user",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -4621,343 +5003,17 @@
                     "404": {
                         "description": "Role or user not found"
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
-        "/api/roles/{id}/permissions": {
-            "get": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Get role permissions",
-                "description": "Returns all permissions assigned to a role",
-                "operationId": "e3723cb24406c30bb6f8d5e606841c92",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the role",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    },
-                    "404": {
-                        "description": "Role not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/roles/{id}/edit": {
-            "put": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Edit role details",
-                "description": "Updates role details and permissions",
-                "operationId": "3455fca5b1328b8089d29f78b92f591e",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of role to edit",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "permissions": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Role updated successfully"
-                    },
-                    "404": {
-                        "description": "Role not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/roles/{id}/single": {
-            "get": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Get detailed role information",
-                "description": "Returns detailed information about a specific role",
-                "operationId": "7a4590523ad554569c957312108c7e7b",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of role to get details for",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "format": "date-time"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "format": "date-time"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Role details retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Role not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/roles/{id}/users": {
-            "get": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Get users with specific role",
-                "description": "Returns list of users who have been assigned a specific role",
-                "operationId": "fb955ce696b02d15ed49753bcd25044d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of role to get users for",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer"
-                                                    },
-                                                    "username": {
-                                                        "type": "string"
-                                                    },
-                                                    "fname": {
-                                                        "type": "string"
-                                                    },
-                                                    "lname": {
-                                                        "type": "string"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "format": "email"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Users with role retrieved successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Role not found"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/roles/{rolename}/add": {
-            "post": {
-                "tags": [
-                    "Roles"
-                ],
-                "summary": "Create role with name",
-                "description": "Creates a new role with the specified name and optional permissions",
-                "operationId": "703cec24b36c580194480931defb2e2f",
-                "parameters": [
-                    {
-                        "name": "rolename",
-                        "in": "path",
-                        "description": "Name of the role to create",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": false,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "permissions": {
-                                        "description": "Optional array of permission names to assign to the role",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Role created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                },
-                                                "permissions": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Role created successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input or role name already exists"
-                    }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/stripe": {
+        "/api/storeStripeInfo": {
             "post": {
                 "tags": [
                     "Stripe"
                 ],
                 "summary": "Configure Stripe gateway",
                 "description": "Store Stripe gateway configuration settings",
-                "operationId": "7f8c488bdbfb54e1978e667c7a8708fd",
+                "operationId": "09ef0502bc9eafa4eca259ab4835675e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5040,14 +5096,14 @@
                 ]
             }
         },
-        "/api/stripe/info": {
+        "/api/stripeInfo": {
             "get": {
                 "tags": [
                     "Stripe"
                 ],
                 "summary": "Get Stripe gateway information",
                 "description": "Returns the current Stripe gateway configuration settings",
-                "operationId": "f53bdacec6e270e15cf10d858ac21696",
+                "operationId": "eb9ec642f203cbbb097f719f3307d234",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -5102,14 +5158,14 @@
                 ]
             }
         },
-        "/api/stripe/{id}": {
-            "put": {
+        "/api/updateStripeInfo/{id}": {
+            "post": {
                 "tags": [
                     "Stripe"
                 ],
                 "summary": "Update Stripe gateway configuration",
                 "description": "Updates the existing Stripe gateway configuration settings",
-                "operationId": "77680d2c76ad2fc5a4433f5b6cf538ef",
+                "operationId": "b60d645bd946cd3b1459b8e0d669c1fa",
                 "parameters": [
                     {
                         "name": "id",
@@ -5360,14 +5416,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/createTimezones": {
             "post": {
                 "tags": [
                     "Timezones"
                 ],
                 "summary": "Create new timezone",
                 "description": "Creates a new timezone entry",
-                "operationId": "af3e480477b28a53b443fb0b3e195499",
+                "operationId": "3513fb6a302134410a2a9ecf7df768e3",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5454,14 +5512,14 @@
                 ]
             }
         },
-        "/api/timezones/{id}": {
-            "put": {
+        "/api/updateTimezones/{id}": {
+            "post": {
                 "tags": [
                     "Timezones"
                 ],
                 "summary": "Update timezone",
                 "description": "Updates an existing timezone entry",
-                "operationId": "2712b7202b8d0c018e29bd74b8d7ed56",
+                "operationId": "d9c546906fc4b8c7e77583d3309cc27c",
                 "parameters": [
                     {
                         "name": "id",
@@ -5548,14 +5606,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/deleteTimezones/{id}": {
             "delete": {
                 "tags": [
                     "Timezones"
                 ],
                 "summary": "Delete timezone",
                 "description": "Deletes an existing timezone entry",
-                "operationId": "905b4976505851d37a4689978f34194c",
+                "operationId": "9b363ddb47de3a146283a5cf209da3c0",
                 "parameters": [
                     {
                         "name": "id",
@@ -5670,14 +5730,14 @@
                 ]
             }
         },
-        "/api/users": {
+        "/api/getAllUsers": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get list of users",
                 "description": "Returns list of users with pagination",
-                "operationId": "d7a57f4d7de18fb0f92501172472c9b6",
+                "operationId": "ccdfbf0be7cafca9cd0cfb7f990238b3",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -5714,14 +5774,16 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/addNewUser": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Create new user",
                 "description": "Creates a new user and returns the user data",
-                "operationId": "9fea6f2adcb69614c521a7733358382d",
+                "operationId": "2f1e71ea1230156c288271dab9297a2f",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5778,14 +5840,14 @@
                 ]
             }
         },
-        "/api/users/{id}": {
+        "/api/showUser/{id}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get user by ID",
                 "description": "Returns user data",
-                "operationId": "40a5104e23b52137e78c3d3ac48b88a8",
+                "operationId": "cdbb665ebd52b2d51a6b72e0ab9ce490",
                 "parameters": [
                     {
                         "name": "id",
@@ -5805,14 +5867,16 @@
                         "description": "User not found"
                     }
                 }
-            },
-            "put": {
+            }
+        },
+        "/api/updateUser/{id}": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Update user",
                 "description": "Updates user data",
-                "operationId": "b166772cec9714067040e77cf14beeba",
+                "operationId": "f99782d00a94fd02b9016c38459161c9",
                 "parameters": [
                     {
                         "name": "id",
@@ -5859,14 +5923,212 @@
                 }
             }
         },
-        "/api/weeks": {
+        "/api/deleteUser/{id}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user",
+                "description": "Deletes a user by ID",
+                "operationId": "45b55a7f3f023e2dd842a1cc4b7e9a96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/changepassword/{user}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Change user password",
+                "description": "Changes the password for a specific user",
+                "operationId": "b5c421a417d72a6ee137bafa1eebd063",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "ID of user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_password",
+                                    "new_password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "confirm_password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/resetPasswordLink": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Send password reset link",
+                "description": "Sends a password reset link to user's email",
+                "operationId": "751ea3ae7bb7bb76bfb3f6b98e24a0d3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reset link sent successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/reset-password": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Reset password",
+                "description": "Resets user password using token",
+                "operationId": "48208475dfcc36888f80b3075a0fc707",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/loggedInUser": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get logged in user",
+                "description": "Returns the currently authenticated user's data",
+                "operationId": "237f265f2e6790e05981725102a328f7",
+                "responses": {
+                    "200": {
+                        "description": "User data retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/days": {
             "get": {
                 "tags": [
                     "Week Days"
                 ],
                 "summary": "Get list of week days",
                 "description": "Returns list of all week days",
-                "operationId": "84f05d2547931aef2fae5677ecf615db",
+                "operationId": "2bd8200981b839387017d5e1610f7a6a",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -5927,7 +6189,9 @@
                         "apiAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/weeks": {
             "post": {
                 "tags": [
                     "Week Days"
@@ -6295,8 +6559,16 @@
             "description": "API Endpoints for Permission Management"
         },
         {
+            "name": "Permission Groups",
+            "description": "API Endpoints for Permission Group Management"
+        },
+        {
             "name": "Authentication",
             "description": "API Endpoints for User Registration and Authentication"
+        },
+        {
+            "name": "Testing",
+            "description": "API Endpoints for Response Testing"
         },
         {
             "name": "Roles",
@@ -6317,10 +6589,6 @@
         {
             "name": "Week Days",
             "description": "API Endpoints for Week Days Management"
-        },
-        {
-            "name": "Testing",
-            "description": "Testing"
         }
     ],
     "security": [

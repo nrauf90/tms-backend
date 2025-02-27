@@ -23,7 +23,7 @@ class OfflinePaymentController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/offline-payments",
+     *     path="/api/offlineMethods",
      *     tags={"Offline Payments"},
      *     summary="Get all offline payment methods",
      *     description="Returns list of all configured offline payment methods",
@@ -62,7 +62,7 @@ class OfflinePaymentController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/offline-payments",
+     *     path="/api/createOfflineMethod",
      *     tags={"Offline Payments"},
      *     summary="Create new offline payment method",
      *     description="Creates a new offline payment method",
@@ -110,8 +110,8 @@ class OfflinePaymentController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/offline-payments/{id}",
+     * @OA\Post(
+     *     path="/api/updateOfflineMethod/{id}",
      *     tags={"Offline Payments"},
      *     summary="Update offline payment method",
      *     description="Updates an existing offline payment method",
@@ -165,7 +165,7 @@ class OfflinePaymentController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/offline-payments/{id}",
+     *     path="/api/deleteOfflineMethod/{id}",
      *     tags={"Offline Payments"},
      *     summary="Delete offline payment method",
      *     description="Deletes an existing offline payment method",

@@ -68,7 +68,7 @@ class CompanyUserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/company-users",
+     *     path="/api/createCompanyUser",
      *     tags={"Company Users"},
      *     summary="Add user to company",
      *     description="Associates a user with the company",
@@ -103,8 +103,8 @@ class CompanyUserController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/company-users/{id}",
+     * @OA\Post(
+     *     path="/api/updateCompanyUser/{id}",
      *     tags={"Company Users"},
      *     summary="Update company user",
      *     description="Updates the role or status of a company user",
@@ -145,7 +145,7 @@ class CompanyUserController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/company-users/{id}",
+     *     path="/api/deleteCompanyUser/{id}",
      *     tags={"Company Users"},
      *     summary="Remove user from company",
      *     description="Removes a user's association with the company",

@@ -24,7 +24,7 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/permissions",
+     *     path="/api/permission",
      *     tags={"Permissions"},
      *     summary="Get list of permissions",
      *     description="Returns list of all permissions",
@@ -56,17 +56,16 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/permissions/{id}",
+     *     path="/api/permission/{permission}",
      *     tags={"Permissions"},
      *     summary="Delete permission",
-     *     description="Deletes a permission by ID",
-     *     security={{"apiAuth":{}}},
+     *     description="Deletes a permission",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="permission",
      *         in="path",
-     *         description="ID of permission to delete",
+     *         description="Permission to delete",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -78,9 +77,9 @@ class PermissionController extends BaseController
      *     )
      * )
      */
-    public function destroy($id)
+    public function destroy($permission)
     {
-        $response = $this->repositoryObj->destroy($id);
+        $response = $this->repositoryObj->destroy($permission);
         if (!$response["success"]) {
             return $this->sendError('The Record Could not be deleted.', ['error' => $response["message"]]);
         }
@@ -89,13 +88,12 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/permissions/{pname}",
+     *     path="/api/permission/{permission}",
      *     tags={"Permissions"},
      *     summary="Create new permission",
      *     description="Creates a new permission with the specified name",
-     *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
-     *         name="pname",
+     *         name="permission",
      *         in="path",
      *         description="Name of the permission to create",
      *         required=true,
@@ -111,9 +109,9 @@ class PermissionController extends BaseController
      *     )
      * )
      */
-    public function createPermission($pname, Request $request)
+    public function createPermission($permission, Request $request)
     {
-        $response = $this->repositoryObj->createPermission($pname, $request);
+        $response = $this->repositoryObj->createPermission($permission, $request);
         if (!$response["success"]) {
             return $this->sendError('The Permission cannot be created.', ['error' => $response["message"]]);
         }
@@ -241,17 +239,16 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/permissions/groups",
+     *     path="/api/createPermissionGroup",
      *     tags={"Permissions"},
      *     summary="Create permission group",
      *     description="Creates a new permission group",
-     *     security={{"apiAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name"},
-     *             @OA\Property(property="name", type="string", example="admin_group"),
-     *             @OA\Property(property="description", type="string", example="Administrative permissions")
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="description", type="string")
      *         )
      *     ),
      *     @OA\Response(
@@ -275,15 +272,14 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/permissions/groups/{id}",
+     *     path="/api/deletePermissionGroup/{id}",
      *     tags={"Permissions"},
      *     summary="Delete permission group",
-     *     description="Deletes a permission group by ID",
-     *     security={{"apiAuth":{}}},
+     *     description="Deletes a permission group",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of permission group to delete",
+     *         description="ID of the permission group",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
@@ -308,28 +304,13 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/permissions/groups",
+     *     path="/api/getAllGroups",
      *     tags={"Permissions"},
      *     summary="Get all permission groups",
      *     description="Returns list of all permission groups",
-     *     security={{"apiAuth":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array", @OA\Items(
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="description", type="string")
-     *             )),
-     *             @OA\Property(property="message", type="string", example="Permission groups retrieved successfully")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="No permission groups found"
+     *         description="Successful operation"
      *     )
      * )
      */
@@ -344,13 +325,12 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/permissions/roles/{roleId}",
+     *     path="/api/assignPermissiontoRole/{id}",
      *     tags={"Permissions"},
      *     summary="Assign permissions to role",
-     *     description="Assigns multiple permissions to a specific role",
-     *     security={{"apiAuth":{}}},
+     *     description="Assigns multiple permissions to a role",
      *     @OA\Parameter(
-     *         name="roleId",
+     *         name="id",
      *         in="path",
      *         description="ID of the role",
      *         required=true,
@@ -359,9 +339,7 @@ class PermissionController extends BaseController
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"),
-     *                 example={"create_users", "edit_users", "delete_users"}
-     *             )
+     *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"))
      *         )
      *     ),
      *     @OA\Response(
@@ -374,9 +352,9 @@ class PermissionController extends BaseController
      *     )
      * )
      */
-    public function assignPermissionToRole($roleId, Request $request)
+    public function assignPermissionToRole($id, Request $request)
     {
-        $response=$this->repositoryObj->assignPermissionToRole($roleId, $request);
+        $response=$this->repositoryObj->assignPermissionToRole($id, $request);
         if(!$response["success"]){
             return $this->sendError('This Record cannot be created.' , ['error' => $response["message"]]);
         }
@@ -384,16 +362,15 @@ class PermissionController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/permissions/{permissionId}",
+     * @OA\Post(
+     *     path="/api/edit/permission/{id}",
      *     tags={"Permissions"},
      *     summary="Edit permission",
-     *     description="Updates an existing permission",
-     *     security={{"apiAuth":{}}},
+     *     description="Updates a permission's details",
      *     @OA\Parameter(
-     *         name="permissionId",
+     *         name="id",
      *         in="path",
-     *         description="ID of permission to update",
+     *         description="ID of the permission",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
@@ -414,9 +391,9 @@ class PermissionController extends BaseController
      *     )
      * )
      */
-    public function editPermission($permissionId, Request $request)
+    public function editPermission($id, Request $request)
     {
-        $response=$this->repositoryObj->editPermission($permissionId, $request);
+        $response=$this->repositoryObj->editPermission($id, $request);
         if(! $response["success"]){
             return $this->sendError('Sorry cannot update permission.', ['error' => $response["message"]]);
         }
@@ -425,27 +402,19 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/permissions/generic",
+     *     path="/api/addGenericPermissions",
      *     tags={"Permissions"},
      *     summary="Create generic permissions",
-     *     description="Creates new generic permissions",
-     *     security={{"apiAuth":{}}},
+     *     description="Creates generic permissions for modules",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="permissions", type="array", @OA\Items(
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="description", type="string")
-     *             ))
+     *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"))
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
      *         description="Generic permissions created successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid input"
      *     )
      * )
      */
@@ -460,24 +429,13 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/permissions/generic",
+     *     path="/api/getGenericPermissions",
      *     tags={"Permissions"},
      *     summary="Get generic permissions",
-     *     description="Returns list of all generic permissions",
-     *     security={{"apiAuth":{}}},
+     *     description="Returns list of generic permissions",
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array", @OA\Items(
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="description", type="string")
-     *             )),
-     *             @OA\Property(property="message", type="string", example="Generic permissions retrieved successfully")
-     *         )
+     *         description="Successful operation"
      *     )
      * )
      */
@@ -492,20 +450,13 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/permissions/grouped",
+     *     path="/api/getGroupedPermissions",
      *     tags={"Permissions"},
      *     summary="Get grouped permissions",
-     *     description="Returns list of permissions grouped by their categories",
-     *     security={{"apiAuth":{}}},
+     *     description="Returns permissions grouped by their groups",
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="object"),
-     *             @OA\Property(property="message", type="string", example="Grouped permissions retrieved successfully")
-     *         )
+     *         description="Successful operation"
      *     )
      * )
      */
@@ -520,31 +471,20 @@ class PermissionController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/permissions/{id}",
+     *     path="/api/getPermission/{id}",
      *     tags={"Permissions"},
      *     summary="Get permission by ID",
-     *     description="Returns a specific permission by its ID",
-     *     security={{"apiAuth":{}}},
+     *     description="Returns details of a specific permission",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of permission to return",
+     *         description="ID of the permission",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="object",
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="description", type="string")
-     *             ),
-     *             @OA\Property(property="message", type="string", example="Permission retrieved successfully")
-     *         )
+     *         description="Successful operation"
      *     ),
      *     @OA\Response(
      *         response=404,

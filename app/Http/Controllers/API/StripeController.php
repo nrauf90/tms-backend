@@ -23,7 +23,7 @@ class StripeController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/stripe",
+     *     path="/api/storeStripeInfo",
      *     tags={"Stripe"},
      *     summary="Configure Stripe gateway",
      *     description="Store Stripe gateway configuration settings",
@@ -70,7 +70,7 @@ class StripeController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/stripe/info",
+     *     path="/api/stripeInfo",
      *     tags={"Stripe"},
      *     summary="Get Stripe gateway information",
      *     description="Returns the current Stripe gateway configuration settings",
@@ -107,8 +107,8 @@ class StripeController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/stripe/{id}",
+     * @OA\Post(
+     *     path="/api/updateStripeInfo/{id}",
      *     tags={"Stripe"},
      *     summary="Update Stripe gateway configuration",
      *     description="Updates the existing Stripe gateway configuration settings",

@@ -61,7 +61,7 @@ class LanguageController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/languages",
+     *     path="/api/createLanguages",
      *     tags={"Languages"},
      *     summary="Create new language",
      *     description="Creates a new language entry",
@@ -105,8 +105,8 @@ class LanguageController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/languages/{id}",
+     * @OA\Post(
+     *     path="/api/updateLanguages/{id}",
      *     tags={"Languages"},
      *     summary="Update language",
      *     description="Updates an existing language entry",
@@ -151,7 +151,7 @@ class LanguageController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/languages/{id}",
+     *     path="/api/deleteLanguages/{id}",
      *     tags={"Languages"},
      *     summary="Delete language",
      *     description="Deletes an existing language entry",

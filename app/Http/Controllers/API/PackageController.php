@@ -69,7 +69,7 @@ class PackageController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/packages",
+     *     path="/api/createPackages",
      *     tags={"Packages"},
      *     summary="Create new package",
      *     description="Creates a new package with specified modules and features",
@@ -111,8 +111,8 @@ class PackageController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/packages/{id}",
+     * @OA\Post(
+     *     path="/api/updatePackages/{id}",
      *     tags={"Packages"},
      *     summary="Update package",
      *     description="Updates an existing package with new data",
@@ -161,7 +161,7 @@ class PackageController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/packages/{id}",
+     *     path="/api/deletePackages/{id}",
      *     tags={"Packages"},
      *     summary="Delete package",
      *     description="Deletes an existing package",
@@ -199,7 +199,7 @@ class PackageController extends BaseController
     
     /**
      * @OA\Get(
-     *     path="/api/packages/{id}/details",
+     *     path="/api/packageDetails/{id}",
      *     tags={"Packages"},
      *     summary="Get package details",
      *     description="Returns detailed information about a specific package including its modules and features",

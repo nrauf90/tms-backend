@@ -71,7 +71,7 @@ class CurrencyController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/currencies",
+     *     path="/api/createCurrency",
      *     summary="Create a new currency",
      *     description="Creates a new currency with the provided details",
      *     operationId="storeCurrency",
@@ -120,8 +120,8 @@ class CurrencyController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/currencies/{id}",
+     * @OA\Post(
+     *     path="/api/updateCurrency/{id}",
      *     summary="Update an existing currency",
      *     description="Updates a currency's details by ID",
      *     operationId="updateCurrency",
@@ -172,7 +172,7 @@ class CurrencyController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/currencies/{id}",
+     *     path="/api/deleteCurrency/{id}",
      *     summary="Delete a currency",
      *     description="Deletes a currency by ID",
      *     operationId="destroyCurrency",
@@ -215,7 +215,7 @@ class CurrencyController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/all-currencies",
+     *     path="/api/allCurrencies",
      *     summary="Get all currencies",
      *     description="Returns a list of all currencies without pagination",
      *     operationId="getAllCurrencies",

@@ -23,7 +23,7 @@ class WeekController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/weeks",
+     *     path="/api/days",
      *     tags={"Week Days"},
      *     summary="Get list of week days",
      *     description="Returns list of all week days",

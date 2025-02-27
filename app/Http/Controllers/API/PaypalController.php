@@ -23,7 +23,7 @@ class PaypalController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/paypal",
+     *     path="/api/storePaypalInfo",
      *     tags={"PayPal"},
      *     summary="Configure PayPal gateway",
      *     description="Store PayPal gateway configuration settings",
@@ -72,7 +72,7 @@ class PaypalController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/paypal/info",
+     *     path="/api/paypalInfo",
      *     tags={"PayPal"},
      *     summary="Get PayPal gateway information",
      *     description="Returns the current PayPal gateway configuration settings",
@@ -110,8 +110,8 @@ class PaypalController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/paypal/{id}",
+     * @OA\Post(
+     *     path="/api/updatePaypalInfo/{id}",
      *     tags={"PayPal"},
      *     summary="Update PayPal gateway configuration",
      *     description="Updates the existing PayPal gateway configuration settings",

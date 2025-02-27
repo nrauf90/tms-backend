@@ -63,7 +63,7 @@ class NotificationController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/notifications/unread",
+     *     path="/api/unreadNotifications",
      *     tags={"Notifications"},
      *     summary="Get unread notifications",
      *     description="Returns list of unread notifications for the authenticated user",
@@ -94,7 +94,7 @@ class NotificationController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/notifications",
+     *     path="/api/newNotification",
      *     tags={"Notifications"},
      *     summary="Create new notification",
      *     description="Creates a new notification",
@@ -137,7 +137,7 @@ class NotificationController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/notifications/{id}",
+     *     path="/api/showNotification/{id}",
      *     tags={"Notifications"},
      *     summary="Get notification by ID",
      *     description="Returns a specific notification",
@@ -182,8 +182,8 @@ class NotificationController extends BaseController
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/notifications/read-all/{id}",
+     * @OA\Get(
+     *     path="/api/readAllNotifications/{id}",
      *     tags={"Notifications"},
      *     summary="Mark all notifications as read",
      *     description="Marks all notifications as read for a specific user",
@@ -223,8 +223,8 @@ class NotificationController extends BaseController
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/notifications/read/{id}",
+     * @OA\Get(
+     *     path="/api/readNotification/{id}",
      *     tags={"Notifications"},
      *     summary="Mark notification as read",
      *     description="Marks a specific notification as read",
@@ -264,7 +264,7 @@ class NotificationController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/notifications/{id}",
+     *     path="/api/deleteNotification/{id}",
      *     tags={"Notifications"},
      *     summary="Delete notification",
      *     description="Deletes a specific notification",

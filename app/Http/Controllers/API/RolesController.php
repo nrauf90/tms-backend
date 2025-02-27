@@ -26,7 +26,7 @@ class RolesController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/roles",
+     *     path="/api/user/role",
      *     tags={"Roles"},
      *     summary="Get list of roles",
      *     description="Returns list of all roles with their permissions",
@@ -62,16 +62,20 @@ class RolesController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/roles",
+     *     path="/api/role/{role}",
      *     tags={"Roles"},
-     *     summary="Create new role",
-     *     description="Creates a new role with specified permissions",
-     *     security={{"apiAuth":{}}},
+     *     summary="Add new role",
+     *     description="Creates a new role with specified name",
+     *     @OA\Parameter(
+     *         name="role",
+     *         in="path",
+     *         description="Name of the role to create",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name"},
-     *             @OA\Property(property="name", type="string", example="editor"),
      *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"), example={"edit_posts", "delete_posts"})
      *         )
      *     ),
@@ -85,28 +89,27 @@ class RolesController extends BaseController
      *     )
      * )
      */
-    public function store(Request $request)
+    public function addRole($rolename, Request $request)
     {
-        $response = $this->repositoryObj->store($request);
+        $response = $this->repositoryObj->addRole($rolename, $request);
         if (!$response["success"]) {
-            return $this->sendError('The Record Could not Saved.', ['error' => $response["message"]]);
+            return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
         }
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
     /**
      * @OA\Get(
-     *     path="/api/roles/{id}",
+     *     path="/api/role/{role}",
      *     tags={"Roles"},
-     *     summary="Get role by ID",
+     *     summary="Get role details",
      *     description="Returns role data with its permissions",
-     *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
-     *         name="id",
+     *         name="role",
      *         in="path",
-     *         description="ID of role to return",
+     *         description="Name of the role",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -118,9 +121,9 @@ class RolesController extends BaseController
      *     )
      * )
      */
-    public function show($id)
+    public function showSingleRole($role)
     {
-        $response = $this->repositoryObj->show($id);
+        $response = $this->repositoryObj->showSingleRole($role);
         if (!$response["success"]) {
             return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
         }
@@ -128,12 +131,11 @@ class RolesController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/roles/{id}",
+     * @OA\Post(
+     *     path="/api/user/role/{id}/edit",
      *     tags={"Roles"},
-     *     summary="Update role",
+     *     summary="Edit role",
      *     description="Updates role data and permissions",
-     *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -158,32 +160,31 @@ class RolesController extends BaseController
      *     )
      * )
      */
-    public function update(Request $request, $id)
+    public function editRole($id, Request $request)
     {
-        $response = $this->repositoryObj->update($id, $request);
-        if (!$response["success"]) {
-            return $this->sendError('The Record Could not be updated.', ['error' => $response["message"]]);
+        $response = $this->repositoryObj->editRole($id, $request);
+        if(!$response["success"]){
+            return $this->sendError('Unable to update the records.', ['error' => $response["message"]]);
         }
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/roles/{id}",
+     * @OA\Get(
+     *     path="/api/role/{id}/permissions",
      *     tags={"Roles"},
-     *     summary="Delete role",
-     *     description="Deletes a role and its associated permissions",
-     *     security={{"apiAuth":{}}},
+     *     summary="Get role permissions",
+     *     description="Returns permissions assigned to a role",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of role to delete",
+     *         description="ID of the role",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Role deleted successfully"
+     *         description="Successful operation"
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -191,22 +192,53 @@ class RolesController extends BaseController
      *     )
      * )
      */
-    public function destroy($id)
+    public function rolePermissions($id)
     {
-        $response = $this->repositoryObj->destroy($id);
+        $response = $this->repositoryObj->rolePermissions($id);
+        if(!$response["success"]){
+            return $this->sendError('Unable to find records.', ['error' => $response["message"]]);
+        }
+        return $this->sendResponse($response["data"], $response["message"]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/user/{user}/role",
+     *     tags={"Roles"},
+     *     summary="Get user roles",
+     *     description="Returns roles assigned to a user",
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="ID of the user",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found"
+     *     )
+     * )
+     */
+    public function showUserWithRole($id)
+    {
+        $response = $this->repositoryObj->showUserWithRole($id);
         if (!$response["success"]) {
-            return $this->sendError('The Record Could not be deleted.', ['error' => $response["message"]]);
+            return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
         }
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
     /**
      * @OA\Post(
-     *     path="/api/roles/{role}/users/{user}",
+     *     path="/api/role/{role}/user/{user}",
      *     tags={"Roles"},
      *     summary="Assign role to user",
      *     description="Assigns a role to a specific user",
-     *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
      *         name="role",
      *         in="path",
@@ -242,22 +274,21 @@ class RolesController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/roles/{role}/users/{user}",
+     *     path="/api/role/{role}/user/{user}",
      *     tags={"Roles"},
      *     summary="Remove role from user",
      *     description="Removes a role from a specific user",
-     *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
      *         name="role",
      *         in="path",
-     *         description="Role model",
+     *         description="ID of the role",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
      *         name="user",
      *         in="path",
-     *         description="User model",
+     *         description="ID of the user",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
@@ -271,224 +302,9 @@ class RolesController extends BaseController
      *     )
      * )
      */
-    public function rolesRemoveUser(Role $role, User $user)
+    public function rolesRemoveUser($role, $user)
     {
         $response = $this->repositoryObj->rolesRemoveUser($role, $user);
-        if (!$response["success"]) {
-            return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
-        }
-        return $this->sendResponse($response["data"], $response["message"]);
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/roles/{id}/permissions",
-     *     tags={"Roles"},
-     *     summary="Get role permissions",
-     *     description="Returns all permissions assigned to a role",
-     *     security={{"apiAuth":{}}},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID of the role",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Role not found"
-     *     )
-     * )
-     */
-    public function rolePermissions($id)
-    {
-        $response = $this->repositoryObj->rolePermissions($id);
-        if(!$response["success"]){
-            return $this->sendError('Unable to find records.', ['error' => $response["message"]]);
-        }
-        return $this->sendResponse($response["data"], $response["message"]);
-    }
-
-    /**
-     * @OA\Put(
-     *     path="/api/roles/{id}/edit",
-     *     tags={"Roles"},
-     *     summary="Edit role details",
-     *     description="Updates role details and permissions",
-     *     security={{"apiAuth":{}}},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID of role to edit",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"))
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Role updated successfully"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Role not found"
-     *     )
-     * )
-     */
-    public function editRole($id, Request $request)
-    {
-        $response = $this->repositoryObj->editRole($id, $request);
-        if(!$response["success"]){
-            return $this->sendError('Unable to update the records.', ['error' => $response["message"]]);
-        }
-        return $this->sendResponse($response["data"], $response["message"]);
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/roles/{id}/single",
-     *     tags={"Roles"},
-     *     summary="Get detailed role information",
-     *     description="Returns detailed information about a specific role",
-     *     security={{"apiAuth":{}}},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID of role to get details for",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="object",
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="created_at", type="string", format="date-time"),
-     *                 @OA\Property(property="updated_at", type="string", format="date-time")
-     *             ),
-     *             @OA\Property(property="message", type="string", example="Role details retrieved successfully")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Role not found"
-     *     )
-     * )
-     */
-    public function showSingleRole($id)
-    {
-        $response = $this->repositoryObj->showSingleRole($id);
-        if (!$response["success"]) {
-            return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
-        }
-        return $this->sendResponse($response["data"], $response["message"]);
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/roles/{id}/users",
-     *     tags={"Roles"},
-     *     summary="Get users with specific role",
-     *     description="Returns list of users who have been assigned a specific role",
-     *     security={{"apiAuth":{}}},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID of role to get users for",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array",
-     *                 @OA\Items(
-     *                     @OA\Property(property="id", type="integer"),
-     *                     @OA\Property(property="username", type="string"),
-     *                     @OA\Property(property="fname", type="string"),
-     *                     @OA\Property(property="lname", type="string"),
-     *                     @OA\Property(property="email", type="string", format="email")
-     *                 )
-     *             ),
-     *             @OA\Property(property="message", type="string", example="Users with role retrieved successfully")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Role not found"
-     *     )
-     * )
-     */
-    public function showUserWithRole($id)
-    {
-        $response = $this->repositoryObj->showUserWithRole($id);
-        if (!$response["success"]) {
-            return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
-        }
-        return $this->sendResponse($response["data"], $response["message"]);
-    }
-
-    /**
-     * @OA\Post(
-     *     path="/api/roles/{rolename}/add",
-     *     tags={"Roles"},
-     *     summary="Create role with name",
-     *     description="Creates a new role with the specified name and optional permissions",
-     *     security={{"apiAuth":{}}},
-     *     @OA\Parameter(
-     *         name="rolename",
-     *         in="path",
-     *         description="Name of the role to create",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=false,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="permissions", type="array", @OA\Items(type="string"),
-     *                 description="Optional array of permission names to assign to the role"
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Role created successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="object",
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="permissions", type="array", @OA\Items(type="string"))
-     *             ),
-     *             @OA\Property(property="message", type="string", example="Role created successfully")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid input or role name already exists"
-     *     )
-     * )
-     */
-    public function addRole($rolename, Request $request)
-    {
-        $response = $this->repositoryObj->addRole($rolename, $request);
         if (!$response["success"]) {
             return $this->sendError('The Record Could not found.', ['error' => $response["message"]]);
         }

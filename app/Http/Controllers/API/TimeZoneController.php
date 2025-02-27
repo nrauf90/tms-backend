@@ -61,7 +61,7 @@ class TimeZoneController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/timezones",
+     *     path="/api/createTimezones",
      *     tags={"Timezones"},
      *     summary="Create new timezone",
      *     description="Creates a new timezone entry",
@@ -107,8 +107,8 @@ class TimeZoneController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/timezones/{id}",
+     * @OA\Post(
+     *     path="/api/updateTimezones/{id}",
      *     tags={"Timezones"},
      *     summary="Update timezone",
      *     description="Updates an existing timezone entry",
@@ -160,7 +160,7 @@ class TimeZoneController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/timezones/{id}",
+     *     path="/api/deleteTimezones/{id}",
      *     tags={"Timezones"},
      *     summary="Delete timezone",
      *     description="Deletes an existing timezone entry",

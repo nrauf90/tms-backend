@@ -68,7 +68,7 @@ class CompanyController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/companies",
+     *     path="/api/createCompany",
      *     tags={"Companies"},
      *     summary="Create new company",
      *     description="Creates a new company",
@@ -109,8 +109,8 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/companies/{id}",
+     * @OA\Post(
+     *     path="/api/updateCompany/{id}",
      *     tags={"Companies"},
      *     summary="Update company",
      *     description="Updates an existing company",
@@ -158,7 +158,7 @@ class CompanyController extends BaseController
 
     /**
      * @OA\Delete(
-     *     path="/api/companies/{id}",
+     *     path="/api/deleteCompany/{id}",
      *     tags={"Companies"},
      *     summary="Delete company",
      *     description="Deletes an existing company",
@@ -196,7 +196,7 @@ class CompanyController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/companies/{id}",
+     *     path="/api/showCompany/{id}",
      *     tags={"Companies"},
      *     summary="Get company details",
      *     description="Returns details of a specific company",
@@ -242,39 +242,35 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/companies/{id}/update",
+     * @OA\Post(
+     *     path="/api/updateCompanyAdmin/{id}",
      *     tags={"Companies"},
-     *     summary="Update company profile",
-     *     description="Updates company profile information",
+     *     summary="Update company admin",
+     *     description="Updates company admin information",
      *     security={{"apiAuth":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of company to update profile",
+     *         description="ID of company to update admin for",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="email", type="string", format="email"),
-     *             @OA\Property(property="phone", type="string"),
-     *             @OA\Property(property="address", type="string"),
-     *             @OA\Property(property="logo", type="string", format="binary"),
-     *             @OA\Property(property="website", type="string"),
-     *             @OA\Property(property="description", type="string")
+     *             @OA\Property(property="admin_id", type="integer"),
+     *             @OA\Property(property="admin_name", type="string"),
+     *             @OA\Property(property="admin_email", type="string", format="email")
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Company profile updated successfully",
+     *         description="Company admin updated successfully",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="success", type="boolean", example=true),
      *             @OA\Property(property="data", type="object"),
-     *             @OA\Property(property="message", type="string", example="Company profile updated successfully")
+     *             @OA\Property(property="message", type="string", example="Company admin updated successfully")
      *         )
      *     ),
      *     @OA\Response(
@@ -286,16 +282,16 @@ class CompanyController extends BaseController
     public function updateCompany($id, Request $request){
         $response = $this->repositoryObj->updateCompany($id, $request);
         if(! $response["success"]){
-            return $this->sendError('Unable to update company', ['error' => $response["message"]]);
+            return $this->sendError('Unable to update company admin', ['error' => $response["message"]]);
         }
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
     /**
      * @OA\Get(
-     *     path="/api/company",
+     *     path="/api/showCompany",
      *     tags={"Companies"},
-     *     summary="Get current company",
+     *     summary="Get current company details",
      *     description="Returns details of the currently authenticated company",
      *     security={{"apiAuth":{}}},
      *     @OA\Response(
@@ -310,9 +306,6 @@ class CompanyController extends BaseController
      *                 @OA\Property(property="email", type="string"),
      *                 @OA\Property(property="phone", type="string"),
      *                 @OA\Property(property="address", type="string"),
-     *                 @OA\Property(property="logo", type="string"),
-     *                 @OA\Property(property="website", type="string"),
-     *                 @OA\Property(property="description", type="string"),
      *                 @OA\Property(property="status", type="boolean"),
      *                 @OA\Property(property="created_at", type="string", format="date-time"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time")

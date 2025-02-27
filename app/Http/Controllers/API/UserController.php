@@ -41,7 +41,7 @@ class UserController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/users",
+     *     path="/api/getAllUsers",
      *     tags={"Users"},
      *     summary="Get list of users",
      *     description="Returns list of users with pagination",
@@ -74,7 +74,7 @@ class UserController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/api/users",
+     *     path="/api/addNewUser",
      *     tags={"Users"},
      *     summary="Create new user",
      *     description="Creates a new user and returns the user data",
@@ -112,7 +112,7 @@ class UserController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/api/users/{id}",
+     *     path="/api/showUser/{id}",
      *     tags={"Users"},
      *     summary="Get user by ID",
      *     description="Returns user data",
@@ -147,8 +147,8 @@ class UserController extends BaseController
 
 
     /**
-     * @OA\Put(
-     *     path="/api/users/{id}",
+     * @OA\Post(
+     *     path="/api/updateUser/{id}",
      *     tags={"Users"},
      *     summary="Update user",
      *     description="Updates user data",
@@ -199,10 +199,27 @@ class UserController extends BaseController
 
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *     path="/api/deleteUser/{id}",
+     *     tags={"Users"},
+     *     summary="Delete user",
+     *     description="Deletes a user by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of user to delete",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found"
+     *     )
+     * )
      */
     public function destroy($id)
     {
@@ -235,6 +252,38 @@ class UserController extends BaseController
 
 
 
+    /**
+     * @OA\Post(
+     *     path="/api/changepassword/{user}",
+     *     tags={"Users"},
+     *     summary="Change user password",
+     *     description="Changes the password for a specific user",
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="ID of user",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"current_password", "new_password", "confirm_password"},
+     *             @OA\Property(property="current_password", type="string", format="password"),
+     *             @OA\Property(property="new_password", type="string", format="password"),
+     *             @OA\Property(property="confirm_password", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password changed successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     )
+     * )
+     */
     public function changePassword($id, Request $request)
     {
         $response = $this->repositoryObj->changePassword($id, $request);
@@ -253,6 +302,29 @@ class UserController extends BaseController
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/resetPasswordLink",
+     *     tags={"Users"},
+     *     summary="Send password reset link",
+     *     description="Sends a password reset link to user's email",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reset link sent successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found"
+     *     )
+     * )
+     */
     public function sendresetPasswordLink(Request $request){
         $response = $this->repositoryObj->resetPassword($request);
         if(!$response["success"]){
@@ -261,6 +333,32 @@ class UserController extends BaseController
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/reset-password",
+     *     tags={"Users"},
+     *     summary="Reset password",
+     *     description="Resets user password using token",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"token", "email", "password", "password_confirmation"},
+     *             @OA\Property(property="token", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="password", type="string", format="password"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password reset successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     )
+     * )
+     */
     public function resetPassword(Request $request){
         $response = $this->repositoryObj->resetPassword($request);
         if(!$response["success"]){
@@ -269,6 +367,23 @@ class UserController extends BaseController
         return $this->sendResponse($response["data"], $response["message"]);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/loggedInUser",
+     *     tags={"Users"},
+     *     summary="Get logged in user",
+     *     description="Returns the currently authenticated user's data",
+     *     security={{"apiAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User data retrieved successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
+     */
     public function getSignedInUser(Request $request){
         $response = $this->repositoryObj->getSignedInUser($request);
         if(! $response["success"]){
