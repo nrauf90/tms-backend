@@ -28,9 +28,9 @@ jobs:
           chmod 600 $HOME/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.CPANEL_HOST }}" >> $HOME/.ssh/known_hosts
 
-      - name: Deploy Laravel Project to cPanel
+      - name: Deploy to cPanel via SCP
         run: |
-          rsync -avz --delete ./ ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }}:/home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          scp -r * ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }}:public_html/elec-main
 
       - name: Run Laravel Setup Commands on cPanel
         run: |
