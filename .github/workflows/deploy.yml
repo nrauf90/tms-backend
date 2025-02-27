@@ -13,6 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug Secrets
+        run: |
+          echo "CPANEL_HOST=${{ secrets.CPANEL_HOST }}"
+          echo "SSH_PRIVATE_KEY Length: ${#SSH_PRIVATE_KEY}"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Setup SSH Key
         run: |
           mkdir -p $HOME/.ssh
