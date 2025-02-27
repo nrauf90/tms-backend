@@ -35,7 +35,7 @@ jobs:
       - name: Run Laravel Setup Commands on cPanel
         run: |
           ssh ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }} << 'EOF'
-          cd /home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          cd /home2/${{ secrets.CPANEL_USER }}/public_html/elec-main
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
