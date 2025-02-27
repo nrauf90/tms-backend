@@ -1,4 +1,4 @@
-name: Deploy Laravel to cPanel
+name: Fleet Management System Deployment
 
 on:
   push:
@@ -13,14 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug Secrets
-        run: |
-          echo "CPANEL_HOST=${{ secrets.CPANEL_HOST }}"
-          echo "CPANEL_USER=${{ secrets.CPANEL_USER }}"
-          echo "SSH_PRIVATE_KEY Length: ${#SSH_PRIVATE_KEY}"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Setup SSH Key
         run: |
           mkdir -p $HOME/.ssh
@@ -28,14 +20,12 @@ jobs:
           chmod 600 $HOME/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.CPANEL_HOST }}" >> $HOME/.ssh/known_hosts
 
-      - name: Deploy to cPanel via SCP
-        run: |
-          scp -r * ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }}:public_html/elec-main
-
-      - name: Run Laravel Setup Commands on cPanel
+      - name: SSH into cPanel and Pull Latest Code
         run: |
           ssh ${{ secrets.CPANEL_USER }}@${{ secrets.CPANEL_HOST }} << 'EOF'
-          cd /home2/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          cd /home/${{ secrets.CPANEL_USER }}/public_html/elec-main
+          git reset --hard  # Ensure a clean state
+          git pull origin main  # Pull latest changes
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
